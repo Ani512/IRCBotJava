@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class WeatherBot {
-    public static void main(String[] args) throws IOException, InterruptedException, ParseException {
+    public static void main(String[] args) {
     }
 
     public static double weatherZip(String zip) throws IOException, InterruptedException, ParseException {
@@ -38,7 +38,7 @@ public class WeatherBot {
 
         JSONObject mainObj = (JSONObject) jsonObj;
         JSONObject main = (JSONObject) mainObj.get("main");
-        double temperature = 0, fahrenheit = 0;
+        double temperature, fahrenheit;
         temperature = (double) main.get("temp");
         fahrenheit = (float)Math.round((((temperature*9)/5) - 459.67)*100.0) / 100.0;
         return fahrenheit;
