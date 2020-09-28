@@ -19,12 +19,20 @@ public class CovidBot {
         var client = HttpClient.newBuilder().build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        int code = response.statusCode();
 
         JSONParser parser = new JSONParser();
         Object jsonObj = parser.parse(response.body());
 
         JSONObject mainObj = (JSONObject) jsonObj;
-        long covidResponse = (long) mainObj.get(covidType.toLowerCase());
-        return covidResponse;
+        long covidResponse = -1;
+        covidResponse = (long) mainObj.get(covidType.toLowerCase());
+
+        if (code==200 && covidResponse!=-1) {
+            return covidResponse;
+        }
+        else {
+            return 0;
+        }
     }
 }

@@ -19,7 +19,14 @@ public class WeatherBot {
         var client = HttpClient.newBuilder().build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return(temperatureFahrenheit(response.body()));
+        int code = response.statusCode();
+
+        if (code==200) {
+            return temperatureFahrenheit(response.body());
+        }
+        else {
+            return 0;
+        }
     }
 
     public static double weatherCity(String city) throws ParseException, IOException, InterruptedException {
@@ -29,7 +36,14 @@ public class WeatherBot {
         var client = HttpClient.newBuilder().build();
 
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return temperatureFahrenheit(response.body());
+        int code = response.statusCode();
+
+        if (code==200) {
+            return temperatureFahrenheit(response.body());
+        }
+        else {
+            return 0;
+        }
     }
 
     public static double temperatureFahrenheit(String weather) throws ParseException {

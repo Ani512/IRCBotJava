@@ -35,7 +35,7 @@ public class Bot extends PircBot {
 
             try {
                 if (WeatherBot.weatherZip(callZip) == 0.0) {
-                    sendMessage(channel, sender + ": Not a valid United States ZIP Code OR API Cannot return Data");
+                    sendMessage(channel, sender + ": Not a valid United States ZIP Code OR the API Cannot return Data");
                 }
                 else {
                     sendMessage(channel, sender + ": Temperature at ZIP Code " + callZip + " is " + WeatherBot.weatherZip(callZip) + " Fahrenheit");
@@ -57,7 +57,7 @@ public class Bot extends PircBot {
 
             try {
                 if (WeatherBot.weatherCity(callCity) == 0.0) {
-                    sendMessage(channel, sender + ": Not a valid United States City Name OR API Cannot return Data");
+                    sendMessage(channel, sender + ": Not a valid United States City Name OR the API Cannot return Data");
                 }
                 else {
                     sendMessage(channel, sender + ": Temperature in " + callCity + " is " + WeatherBot.weatherCity(callCity) + " Fahrenheit");
