@@ -12,9 +12,10 @@ public class Bot extends PircBot {
         sendMessage(channel, sender + ": Welcome to Channel " + channel + " !");
         sendMessage(channel, sender + ": Enter a Valid United States ZIP Code or the City Name in any Country to" +
                 " find the temperature at that Location. You may enter it with or without using the word 'Weather' as the predecessor");
-        sendMessage(channel, sender + ": Enter Covid 'Country_Name' 'parameter' to get the current details about" +
-                " the havoc being caused by COVID-19. Example -> Covid India active  OR  Covid Germany Deaths");
+        sendMessage(channel, sender + ": Enter Covid 'Valid_Country_Name' 'Parameter' to get the current details about" +
+                " the havoc being caused by COVID-19. Example -> Covid India active  (OR)  Covid Germany Deaths");
         sendMessage(channel, sender + ": Parameter Types for Covid -> Deaths, Active, Recovered, Critical, Tests");
+        sendMessage(channel, sender + ": Type 'Disconnect Bot' to end the connection with the Remote Host (The Bot Will Exit)");
     }
 
     public void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -34,11 +35,12 @@ public class Bot extends PircBot {
             }
 
             try {
-                if (WeatherBot.weatherZip(callZip) == 0.0) {
-                    sendMessage(channel, sender + ": Not a valid United States ZIP Code OR the API Cannot return Data");
+                if (WeatherBot.weatherZip(callZip) == null) {
+                    sendMessage(channel, sender + ": Not a valid United States ZIP Code (OR) The API Cannot return Data");
                 }
                 else {
-                    sendMessage(channel, sender + ": Temperature at ZIP Code " + callZip + " is " + WeatherBot.weatherZip(callZip) + " Fahrenheit");
+                    double[] tempWeather = WeatherBot.weatherZip(callZip);
+                    sendMessage(channel, sender + ": Temperature at ZIP Code " + callZip + " is " + tempWeather[0] + " Fahrenheit. Feels like "+ tempWeather[1] + " Fahrenheit");
                 }
             } catch (IOException | InterruptedException | ParseException e) {
                 e.printStackTrace();
@@ -56,11 +58,12 @@ public class Bot extends PircBot {
             }
 
             try {
-                if (WeatherBot.weatherCity(callCity) == 0.0) {
-                    sendMessage(channel, sender + ": Not a valid United States City Name OR the API Cannot return Data");
+                if (WeatherBot.weatherCity(callCity) == null) {
+                    sendMessage(channel, sender + ": Not a valid City Name (OR) The API Cannot return Data");
                 }
                 else {
-                    sendMessage(channel, sender + ": Temperature in " + callCity + " is " + WeatherBot.weatherCity(callCity) + " Fahrenheit");
+                    double[] tempWeather = WeatherBot.weatherCity(callCity);
+                    sendMessage(channel, sender + ": Temperature in " + callCity + " is " + tempWeather[0] + " Fahrenheit. Feels like " + tempWeather[1] + " Fahrenheit");
                 }
             } catch (IOException | InterruptedException | ParseException e) {
                 e.printStackTrace();
@@ -73,8 +76,8 @@ public class Bot extends PircBot {
             String covidType = words[2];
 
             try {
-                if (CovidBot.covid(covidCountry, covidType) == 0) {
-                    sendMessage(channel, sender + ": Not a valid Country Name or Parameter for the number of Cases");
+                if (CovidBot.covid(covidCountry, covidType) == -1L || CovidBot.covid(covidCountry, covidType) == -1) {
+                    sendMessage(channel, sender + ": Invalid Valid Country Name (OR) Invalid Parameter for the number of Cases");
                 }
                 else {
                     sendMessage(channel, sender + ": The number of Coronavirus " + covidType +" in " + covidCountry + " is " + CovidBot.covid(covidCountry, covidType));
@@ -82,6 +85,10 @@ public class Bot extends PircBot {
             } catch (IOException | ParseException | InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        else if (message.toLowerCase().matches("^disconnect bot")) {
+            dispose();
         }
 
         else {
