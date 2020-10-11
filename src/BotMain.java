@@ -12,4 +12,5 @@ public class BotMain {
     Implementation of the BOT Requires the pircBot.jar file
     Parsing JSON Done using the jsonSimple.jar file
     Run the BotMain.java file to connect to the IRC server
+    Requires JDK 11 or above for implementation
 */
