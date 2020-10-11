@@ -16,8 +16,8 @@ public class CovidBot {
         // User input - (Covid Type Parameter) - Validation
         String[] type = {"recovered", "tests", "active", "deaths", "critical"};       // Available commands array
         boolean flag=false;
-        for (int pos=0 ; pos<type.length ; pos++) {
-            if (type[pos].equalsIgnoreCase(covidType)) {
+        for (String s : type) {
+            if (s.equalsIgnoreCase(covidType)) {
                 flag = true;
                 break;
             }

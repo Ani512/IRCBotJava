@@ -107,9 +107,28 @@ public class Bot extends PircBot {
             }
         }
 
+        else if (message.toLowerCase().contains("random joke")) {
+            try {
+                String[] temp = JokeBot.randomJoke();
+
+                if (temp[0].equalsIgnoreCase("error")) {
+                    sendMessage(channel, sender + ": JokeAPI is Currently down for Development. Please try again later");
+                }
+                else if (temp[1].equalsIgnoreCase("null")) {
+                        sendMessage(channel, sender + ": " + temp[0]);
+                    }
+                else {
+                    sendMessage(channel, sender + ": " + temp[0]);
+                    sendMessage(channel, sender + ": " + temp[1]);
+                }
+            } catch (IOException | ParseException e) {
+                System.out.println("The Biggest Joke is this Joke API");
+            }
+        }
+
         // Message to Disconnect Bot
         else if (message.toLowerCase().matches("^disconnect bot")) {
-            dispose();
+            dispose();      // Ends the connection between the IRC Server and the Bot
         }
 
         // If user wants a list of commands available

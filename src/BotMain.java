@@ -7,3 +7,9 @@ public class BotMain {
         TempBot.joinChannel("#PrjDev2336");             // Will join the Channel #PrjDev2336
     }
 }
+
+/*
+    Implementation of the BOT Requires the pircBot.jar file
+    Parsing JSON Done using the jsonSimple.jar file
+    Run the BotMain.java file to connect to the IRC server
+*/
